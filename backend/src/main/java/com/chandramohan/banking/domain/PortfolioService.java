@@ -279,6 +279,7 @@ public class PortfolioService {
         t.price(),
         t.total(),
         t.createdAt());
+    db.update("INSERT INTO event_outbox(id,resource_id,event_type,sent) VALUES(?,?,?,FALSE)",id(),t.id(),"TRADE_EXECUTED");
     return t;
   }
 

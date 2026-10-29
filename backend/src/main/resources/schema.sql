@@ -6,3 +6,6 @@ CREATE TABLE IF NOT EXISTS trades(id VARCHAR(36) PRIMARY KEY,portfolio_id VARCHA
 CREATE INDEX IF NOT EXISTS trade_portfolio ON trades(portfolio_id,created_at);
 CREATE TABLE IF NOT EXISTS requests(owner_id VARCHAR(36) REFERENCES app_users(id),request_key VARCHAR(80),fingerprint VARCHAR(500) NOT NULL,result_id VARCHAR(36) NOT NULL,PRIMARY KEY(owner_id,request_key));
 CREATE TABLE IF NOT EXISTS imports(owner_id VARCHAR(36) REFERENCES app_users(id),request_key VARCHAR(80),csv_content VARCHAR(50100) NOT NULL,result_ids VARCHAR(4000) NOT NULL,PRIMARY KEY(owner_id,request_key));
+
+CREATE TABLE IF NOT EXISTS event_outbox(id VARCHAR(36) PRIMARY KEY,resource_id VARCHAR(36) NOT NULL,event_type VARCHAR(30) NOT NULL,sent BOOLEAN NOT NULL DEFAULT FALSE);
+CREATE TABLE IF NOT EXISTS processed_events(id VARCHAR(36) PRIMARY KEY,resource_id VARCHAR(36) NOT NULL,event_type VARCHAR(30) NOT NULL);
